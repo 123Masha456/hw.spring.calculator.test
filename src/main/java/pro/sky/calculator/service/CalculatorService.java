@@ -3,12 +3,12 @@ package pro.sky.calculator.service;
 public interface CalculatorService {
     String calculator();
 
-    int plus(int num1, int num2);
+    long plus(long num1, long num2);
 
-    int minus(int num1, int num2);
+    long minus(long num1, long num2);
 
-    int multiply(int num1, int num2);
+    long multiply(long num1, long num2);
 
-    double divide(int num1, int num2);
+    double divide(long num1, long num2);
 
 }

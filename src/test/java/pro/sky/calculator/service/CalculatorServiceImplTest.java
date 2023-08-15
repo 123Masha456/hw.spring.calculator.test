@@ -5,6 +5,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.math.BigInteger;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -19,32 +20,32 @@ class CalculatorServiceImplTest {
     }
 
     @Test
-    void plus_num1PlusNum2ResultWithPlus_resultWithPlus() {
+    void plus_num1AndNum2Positive_resultWithPlus() {
         var result = underTest.plus(4, 2);
         assertEquals(6, result);
     }
 
     @Test
-    void plus_num1PlusNum2ResultWithMinus_resultWithMinus() {
+    void plus_num1NegativeAndNum2Positive_resultWithMinus() {
         var result = underTest.plus(-100, 40);
         assertEquals(-60, result);
     }
 
     @Test
-    void plus_num1PlusNum2MaxValue_integer() {
+    void plus_num1PlusNum2IntegerMaxValue_longPositive() {
         var result = underTest.plus(Integer.MAX_VALUE, Integer.MAX_VALUE);
-        assertEquals(-2, result);
+        assertEquals(4294967294L, result);
     }
 
     @Test
-    void plus_num1PlusNum2MinValue_integer() {
+    void plus_num1PlusNum2IntegerMinValue_longNegative() {
         var result = underTest.plus(Integer.MIN_VALUE, Integer.MIN_VALUE);
-        assertEquals(0, result);
+        assertEquals(-4294967296L, result);
     }
 
     @ParameterizedTest
     @MethodSource("dataForPlus")
-    void plus__returnIntegerPlusOrMinus(int num1, int num2, int expectedResult) {
+    void plus__returnIntegerPlusOrMinus(int num1, int num2, long expectedResult) {
         var result = underTest.plus(num1, num2);
         assertEquals(expectedResult, result);
     }
@@ -53,18 +54,19 @@ class CalculatorServiceImplTest {
         return Stream.of(
                 Arguments.of(4, 2, 6),
                 Arguments.of(-100, 40, -60),
-                Arguments.of(Integer.MAX_VALUE, Integer.MAX_VALUE, -2)
+                Arguments.of(Integer.MAX_VALUE, Integer.MAX_VALUE, 4294967294L),
+                Arguments.of(Integer.MIN_VALUE, Integer.MIN_VALUE,-4294967296L)
         );
     }
 
     @Test
-    void minus_num1MinusNum2SignPlus_resultWithSignPlus() {
+    void minus_num1AndNum2PositiveAndNum2LessThanNum1_resultWithMinus() {
         var result = underTest.minus(30, 9);
         assertEquals(21, result);
     }
 
     @Test
-    void minus_num1MinusNum2SighMinus_resultWithMinus() {
+    void minus_num1AndNum2PositiveAndNum1LessThanNum2_resultWithMinus() {
         var result = underTest.minus(28, 29);
         assertEquals(-1, result);
     }
@@ -84,32 +86,32 @@ class CalculatorServiceImplTest {
     }
 
     @Test
-    void multiply_num1MultiplyNum2SignPlus_resultWithPlus() {
+    void multiply_num1AndNum2Positive_resultWithPlus() {
         var result = underTest.multiply(2, 4);
         assertEquals(8, result);
     }
 
     @Test
-    void multiply_num1MultiplyNum2SignMinus_resultWithMinus() {
+    void multiply_num1NegativeAndNum2Positive_resultWithMinus() {
         var result = underTest.multiply(-2, 4);
         assertEquals(-8, result);
     }
 
     @Test
-    void multiply_num1MultiplyNum2MaxValue_integer() {
+    void multiply_num1MultiplyNum2IntegerMaxValue_longPositive() {
         var result = underTest.multiply(Integer.MAX_VALUE, Integer.MAX_VALUE);
-        assertEquals(1, result);
+        assertEquals(4611686014132420609L, result);
     }
 
     @Test
-    void multiply_num1MultiplyNum2MinValue_integer() {
+    void multiply_num1MultiplyNum2IntegerMinValue_longPositive() {
         var result = underTest.multiply(Integer.MIN_VALUE, Integer.MIN_VALUE);
-        assertEquals(0, result);
+        assertEquals(4611686018427387904L, result);
     }
 
     @ParameterizedTest
     @MethodSource("dataForMultiply")
-    void multiply__resultIntegerPlusOrMinus(int num1, int num2, int expectedResult) {
+    void multiply__resultIntegerPlusOrMinus(int num1, int num2, long expectedResult) {
         var result = underTest.multiply(num1, num2);
         assertEquals(expectedResult, result);
     }
@@ -118,8 +120,8 @@ class CalculatorServiceImplTest {
         return Stream.of(
                 Arguments.of(2, 4, 8),
                 Arguments.of(-2, 4, -8),
-                Arguments.of(Integer.MAX_VALUE, Integer.MAX_VALUE, 1),
-                Arguments.of(Integer.MIN_VALUE, Integer.MIN_VALUE, 0)
+                Arguments.of(Integer.MAX_VALUE, Integer.MAX_VALUE, 4611686014132420609L),
+                Arguments.of(Integer.MIN_VALUE, Integer.MIN_VALUE, 4611686018427387904L)
         );
     }
 
