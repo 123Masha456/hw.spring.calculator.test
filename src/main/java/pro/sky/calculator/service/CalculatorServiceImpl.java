@@ -10,22 +10,22 @@ public class CalculatorServiceImpl implements CalculatorService {
     }
 
     @Override
-    public long plus(long num1, long num2) {
-        return num1 + num2;
+    public long plus(int num1, int num2) {
+        return (long) num1 + num2;
     }
 
     @Override
-    public long minus(long num1, long num2) {
-        return num1 - num2;
+    public long minus(int num1, int num2) {
+        return (long)num1 - num2;
     }
 
     @Override
-    public long multiply(long num1, long num2) {
-        return num1 * num2;
+    public long multiply(int num1, int num2) {
+        return (long)num1 * num2;
     }
 
     @Override
-    public double divide(long num1, long num2) {
+    public double divide(int num1, int num2) {
         if (num2 == 0) {
             throw new IllegalArgumentException();
         }
